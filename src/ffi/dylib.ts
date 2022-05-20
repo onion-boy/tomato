@@ -16,7 +16,7 @@ function suffix(name: string): string {
 }
 
 export function dylib() {
-  const libName = suffix("./build/Debug/" + pluginName);
+  const libName = "./build/Debug/" + suffix(pluginName);
   console.log(libName);
   const lib = Deno.dlopen(libName, {
     "add": { parameters: ["isize", "isize"], result: "isize" },
