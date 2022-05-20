@@ -1,6 +1,8 @@
 const pluginName = "plugin";
 
-function suffix(name: string): string {
+type LibraryType = "Release" | "Debug";
+
+function suffix(type: LibraryType, name: string): string {
   const os = Deno.build.os;
   const unix = "lib" + name;
 
@@ -12,11 +14,14 @@ function suffix(name: string): string {
     name += ".dll";
   }
 
+  if (type === "Debug")
+    return "Debug/" + name;
+
   return name;
 }
 
-export function dylib() {
-  const libName = "./build/Debug/" + suffix(pluginName);
+export function dylib(type: LibraryType) {
+  const libName = "./build/" + suffix(type, pluginName);
   console.log(libName);
   const lib = Deno.dlopen(libName, {
     "add": { parameters: ["isize", "isize"], result: "isize" },
