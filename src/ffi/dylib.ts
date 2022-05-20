@@ -2,11 +2,12 @@ const pluginName = "plugin";
 
 function suffix(name: string): string {
   const os = Deno.build.os;
+  const unix = "lib" + name;
 
   if (os === "linux") {
-    name += ".so";
+    name = unix + ".so";
   } else if (os === "darwin") {
-    name += ".dylib";
+    name = unix + ".dylib";
   } else if (os === "windows") {
     name += ".dll";
   }
